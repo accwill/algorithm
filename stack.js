@@ -1,53 +1,61 @@
+/* 
+* @文件说明: 使用下划线约定表示私有
+* @Date: 2021-03-11 19:39:15  
+* @Last Modified time: 2021-03-11 19:39:15  
+*/
 class Stack {
   constructor() {
-    this.count = 0;
-    this.items = [];
+    this.__count = 0;
+    this.__items = [];
   }
 
   push(element) {
-    this.items[this.count] = element;
-    this.count++;
+    this.__items[this.__count] = element;
+    this.__count++;
   }
 
   pop() {
     if (this.isEmpty()) {
       return undefined;
     }
-    this.count--;
-    const result = this.items[this.count];
-    delete this.items[this.count];
+    this.__count--;
+    const result = this.__items[this.__count];
+    delete this.__items[this.__count];
     return result;
   }
 
   peek() {
-    return this.items[this.items.length - 1];
+    return this.__items[this.__items.length - 1];
   }
   
   isEmpty() {
-
+    return this.__count === 0;
   }
 
   size() {
-    return this.items.length;
+    return this.__items.length;
   }
   
   clear() {
-    return this.items = [];
+    return this.__items = [];
+    // while (!this.isEmpty()) {
+    //   this.pop();
+    // }
   }
 
   toString() {
     if (this.isEmpty()) {
       return '';
     }
-    let objString = `${this.items[0]}`;
-    for (let i = 1; i < this.count; i++) {
-      objString = `${objString}, ${this.items[i]}`;
+    let objString = `${this.__items[0]}`;
+    for (let i = 1; i < this.__count; i++) {
+      objString = `${objString}, ${this.__items[i]}`;
     }
     return objString;
   }
 }
 
 const stack = new Stack();
-stack.push(5);
-stack.push(8);
-console.log('stack', stack)
+console.log(Object.getOwnPropertyNames(stack));
+console.log(Object.keys(stack));
+console.log('stack', stack);
