@@ -22,11 +22,12 @@ const intersection = (setA, setB) => {
 
 // 差集
 const difference = (setA, setB) => {
-  const differenceSet = new Set();
-  setA.forEach(value => {
-    if (!setB.has(value)) { // {1}
-      differenceSet.add(value);
-    }
-  });
-  return differenceSet;
+  // const differenceSet = new Set();
+  // setA.forEach(value => {
+  //   if (!setB.has(value)) { // {1}
+  //     differenceSet.add(value);
+  //   }
+  // });
+  // return differenceSet;
+  return new Set([...setA].filter(x => !setB.has(x)));
 };
