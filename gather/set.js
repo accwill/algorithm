@@ -60,16 +60,49 @@ class Set {
   // 交集
   intersection(otherSet) {
     const intersectionSet = new Set();
-    const values = this.items.values();
+    const values = this.values();
     for (let i = 0; i < values.length; i++) {
       if (otherSet.has(values[i])) {
-        intersectionSet.add(valeus[i]);
+        intersectionSet.add(values[i]);
       }
     }
     return intersectionSet;
   }
+  // 差集
+  difference(otherSet) {
+    const differenceSet = new Set();
+    this.values.forEach(element => {
+      if (!otherSet.has(element)) {
+        differenceSet.add(element);
+      }
+    });
+    return differenceSet;
+  }
+
+  // 子集
+  isSubsetOf(otherSet) {
+    if (this.size() > otherSet.size()) {
+      return false;
+    }
+    let isSubset = true;
+    this.values().every(value => {
+      if (!otherSet.has(value)) {
+        isSubset = false;
+        return false;
+      }
+      return true;
+    })
+    return isSubset;
+  }
+  
 }
 
+
+/**
+ * 
+ * 
+ * 
+ */
 
 const setA = new Set();
 setA.add(1);
@@ -83,6 +116,8 @@ setB.add(5);
 setB.add(6);
 
 const unionAB = setA.union(setB);
+const unionC = unionAB.intersection(setB);
 console.log(unionAB.values());
+console.log(unionC.values());
 
 console.log();
