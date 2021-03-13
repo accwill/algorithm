@@ -109,15 +109,26 @@ class Dictionary {
     }
     return objString; // {3}
   }
+
 }
 
-const dictionary = new Dictionary();
-dictionary.set('Gandalf', 'gandalf@email.com');
-dictionary.set('John', 'johnsnow@email.com');
-dictionary.set('Tyrion', 'tyrion@email.com');
+function test () {
 
-console.log('tostring', dictionary.toString())
-console.log(dictionary.keys());
-console.log(dictionary.values());
-console.log(dictionary.keyValues());
-console.log();
+  const dictionary = new Dictionary();
+  dictionary.set('Gandalf', 'gandalf@email.com');
+  dictionary.set('John', 'johnsnow@email.com');
+  dictionary.set('Tyrion', 'tyrion@email.com');
+  
+  
+  
+  console.log('tostring', dictionary.toString())
+  console.log(dictionary.keys());
+  console.log(dictionary.values());
+  console.log(dictionary.keyValues());
+  console.log();
+}
+
+
+module.exports = {
+  ValuePair
+}
