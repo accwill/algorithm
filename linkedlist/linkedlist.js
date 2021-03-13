@@ -128,6 +128,7 @@ class LinkedList {
     if (position === 0) {
       // 直接返回头
       this.head = current?.next;
+      this.count--;
       return current;
     }
 
