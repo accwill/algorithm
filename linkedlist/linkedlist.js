@@ -40,21 +40,21 @@ class LinkedList {
     if (position < 0 || position > this.count) {
       return false;
     }
-
     let prev;
     let current = this.head;
     const node = new Node(element);
-    if (index === 0) {
+    if (position === 0) {
       this.head = node;
       node.next = current;
+      this.count++;
       return true;
     }
 
-    prev = this.getElementAt(index - 1);
+    prev = this.getElementAt(position - 1);
     current = prev.next;
     prev.next = node;
     node.next = current;
-
+    this.count++;
     // for (let i = 0; i < position; i++) {
     //   prev = current;
     //   current = current.next;
@@ -127,17 +127,17 @@ class LinkedList {
     let prev;
     if (position === 0) {
       // 直接返回头
-      this.head = current.next;
+      this.head = current?.next;
       return current;
     }
 
     for (let i = 0; i < position; i++) {
       prev = current;
-      current = current.next;
+      current = current?.next;
     }
     
-    prev.next = current.next;
-    
+    prev.next = current?.next;
+    this.count--;
     return current;
   }
 
@@ -157,26 +157,35 @@ class LinkedList {
     if (this.head === null) {
       return '';
     }
-
     let objString = `${this.head.element}`;
     let current = this.head.next;
-    for (let i = 0; i < this.count; i++) {
+    for (let i = 1; i < this.count; i++) {
       objString = `${objString}, ${current.element}`;
-      current = current.next;
+      current = current?.next;
     }
     return objString;
   }
 
 }
 
-const linkedlist = new LinkedList();
 
-linkedlist.push(15);
-linkedlist.push(16);
-linkedlist.push(17);
-linkedlist.push(18);
+function text() {
+  const linkedlist = new LinkedList();
+  
+  linkedlist.push(15);
+  linkedlist.push(16);
+  linkedlist.push(17);
+  linkedlist.push(18);
+  
+  
+  console.log('size', linkedlist.size())
+  console.log('toString', linkedlist.toString());
+  console.log('remove' ,linkedlist.remove(17).element)
+  console.log('toString', linkedlist.toString());
+}
 
-console.log(linkedlist.remove(17))
-console.log('sldkfj', linkedlist);
-
-module.exports = LinkedList;
+module.exports = {
+  LinkedList,
+  Node,
+  defaultEqual
+};
