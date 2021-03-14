@@ -1,4 +1,4 @@
-function factorialInterative(number) {
+function factorialInteractive(number) {
   let total = 1;
   for (let i = number; i > 1; i--) {
     total *= i;
@@ -6,4 +6,4 @@ function factorialInterative(number) {
   return total;
 }
 
-console.log('factorialInterative', factorialInterative(5))
+console.log('factorialInteractive', factorialInteractive(5));
