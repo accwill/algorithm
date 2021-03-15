@@ -1,3 +1,10 @@
+/**
+ * @文件说明: 说明
+ * 在AVL树中，需要对每个节点计算右子树高度（hr）和左子树高度（hl）之间的差值，该值（hr－hl）应为0、1或-1。
+ * 
+ * @Date: 2021-03-15 20:11:10
+ * @Last Modified time: 2021-03-15 20:11:10
+ */
 const { defaultCompare, BalanceFactor } = require('../utils');
 const { BinarySearchTree } = require('./binarySerachTree');
 
@@ -36,16 +43,32 @@ class AVLTree extends BinarySearchTree {
   }
 
 
+  // 向右旋转
   rotationLL(node) {
-    const tmp = node.left;
-    return tmp;
+    const temp = node.left;
+    node.left = temp.right;
+    temp.right = node;
+    return temp;
   }
 
+  // 向左旋转
   rotationRR(node) {
     const tmp = node.right;
-    node.right = tmp.right;
+    node.right = tmp.left;
     tmp.left = node;
     return tmp;
+  }
+  
+  // 先左后右
+  rotationLR(node) {
+    node.left = this.rotationRR(node.left);
+    return this.rotationLL(node);
+  }
+
+  // 先右后左
+  rotationRL(node) {
+    node.right = this.rotationLL(node.right);
+    return this.rotationRR(node);
   }
   
 }
@@ -58,6 +81,7 @@ tree.insert(6)
 tree.insert(5)
 tree.insert(7)
 tree.insert(4)
+
 
 console.log('height', tree.getNodeHeight(tree.root))
 
