@@ -5,7 +5,7 @@
  * @Date: 2021-03-15 20:11:10
  * @Last Modified time: 2021-03-15 20:11:10
  */
-const { defaultCompare, BalanceFactor } = require('../utils');
+const { defaultCompare, BalanceFactor, Compare } = require('../utils');
 const { BinarySearchTree } = require('./binarySerachTree');
 
 class AVLTree extends BinarySearchTree {
@@ -45,18 +45,18 @@ class AVLTree extends BinarySearchTree {
 
   // 向右旋转
   rotationLL(node) {
-    const temp = node.left;
-    node.left = temp.right;
-    temp.right = node;
-    return temp;
+    const nextHead = node.left;
+    node.left = nextHead.right;
+    nextHead.right = node;
+    return nextHead;
   }
 
   // 向左旋转
   rotationRR(node) {
-    const tmp = node.right;
-    node.right = tmp.left;
-    tmp.left = node;
-    return tmp;
+    const nextHead = node.right;
+    node.right = nextHead.left;
+    nextHead.left = node;
+    return nextHead;
   }
   
   // 先左后右
@@ -69,6 +69,78 @@ class AVLTree extends BinarySearchTree {
   rotationRL(node) {
     node.right = this.rotationLL(node.right);
     return this.rotationRR(node);
+  }
+
+
+  insertNode(node, key) {
+    if (node == null) {
+      return new Node(key);
+    } else if (this.compareFn(key ,node.key) === Compare.LESS_THAN) {
+      node.left = this.insertNode(node.left, key);
+    } else if (this.compareFn(key, nodr.key) === Compare.BIGGER_THAN) {
+      nodex.right = this.insertNode(node.right, key);
+    } else {
+      return node;
+    }
+
+    const balanceFactor = this.getBalanceFactor(ndoe);
+
+    if (balanceFactor === BalanceFactor.UNBALANCED_LEFT) {
+      if (this.compareFn(key, node.left.key) === Compare.LESS_THAN) {
+        node = this.rotationLL(node);
+      } else {
+        return this.rotationLR(node);
+      }
+    }
+
+    if (balanceFactor === BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT) {
+      if (this.compareFn(key, node.right.key) === Compare.BIGGER_THAN) {
+        node = this.rotationRR(node);
+      } else {
+        return this.rotationRL(node);
+      }
+    }
+    
+
+    return node;
+  }
+
+  removeNode(node, key) {
+    node = super.removeNode(node, key); // {1}
+    if (node == null) {
+      return node; // null，不需要进行平衡
+    }
+    // 检测树是否平衡
+    const balanceFactor = this.getBalanceFactor(node); // {2}
+    if (balanceFactor === BalanceFactor.UNBALANCED_LEFT) { // {3}
+      const balanceFactorLeft = this.getBalanceFactor(node.left); // {4}
+      if (
+        balanceFactorLeft === BalanceFactor.BALANCED ||
+        balanceFactorLeft === BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
+      ) { // {5}
+        return this.rotationLL(node); // {6}
+      }
+      if (
+          balanceFactorLeft === BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
+          ) { // {7}
+        return this.rotationLR(node.left); // {8}
+      }
+    }
+    if (balanceFactor === BalanceFactor.UNBALANCED_RIGHT) { // {9}
+      const balanceFactorRight = this.getBalanceFactor(node.right); // {10}
+      if (
+        balanceFactorRight === BalanceFactor.BALANCED ||
+        balanceFactorRight === BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
+      ) { // {11}
+        return this.rotationRR(node); // {12}
+      }
+      if (
+          balanceFactorRight === BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
+          ) { // {13}
+        return this.rotationRL(node.right); // {14}
+      }
+    }
+    return node;
   }
   
 }

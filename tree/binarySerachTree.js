@@ -194,9 +194,6 @@ class BinarySearchTree {
       return node;
     }
 
-    
-    
-    
   }
 
 }
@@ -207,7 +204,6 @@ module.exports = {
 }
 
 function test() {
-
   const tree = new BinarySearchTree();
   tree.insert(11);
   tree.insert(7);
